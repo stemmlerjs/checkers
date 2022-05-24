@@ -1,0 +1,25 @@
+
+.board {
+  display: flex;
+}
+
+.row {
+  
+}
+
+.square {
+  min-height: 5rem;
+  min-width: 5rem;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-red {
+  background-color: #ee1a24;
+}
+
+.color-black {
+  background-color: #241f21;
+}
