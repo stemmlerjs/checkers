@@ -38,6 +38,14 @@ export class Square {
     return this.index;
   }
 
+  getXPosition (): number {
+    return this.xPos;
+  }
+
+  getYPosition (): number {
+    return this.yPos;
+  }
+
   getColor (): Color {
     return this.color;
   }

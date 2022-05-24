@@ -1,5 +1,6 @@
 
 import { Result } from "../../shared/logic/Result";
+import { coordinator } from "../game";
 import { Piece } from "./Piece";
 import { Square } from "./Square";
 
@@ -32,7 +33,7 @@ export class Pieces {
             color: isLightPieceRow ? 'light' : 'dark',
             position: [i, j],
             type: 'initial'
-          });
+          }, coordinator);
         }
       }
     }

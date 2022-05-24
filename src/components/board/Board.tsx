@@ -9,9 +9,9 @@ export class Board {
   private squares: Square[][];
   private pieces: Pieces;
 
-  constructor() {
+  constructor(pieces: Pieces) {
     this.squares = this.setupSquares();
-    this.pieces = Pieces.createWithInitialPositions();
+    this.pieces = pieces;
 
     makeAutoObservable(this);
   }

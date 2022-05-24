@@ -1,5 +1,6 @@
 import { Result } from "../../shared/logic/Result";
 import { Board } from "./Board"
+import { Pieces } from "./Pieces";
 import { Square } from "./Square";
 
 describe('board', () => {
@@ -9,7 +10,7 @@ describe('board', () => {
   let maybeSquare: Result<Square>;
 
   beforeEach(() => {
-    board = new Board();
+    board = new Board(Pieces.createWithInitialPositions());
     squares = board.getSquares();
   })
 
@@ -47,5 +48,5 @@ describe('board', () => {
     let maybePiece = board.getPieceAtSquare(0, 0);
 
     expect(maybePiece.isFailure).toEqual(true);
-  })
+  });
 })

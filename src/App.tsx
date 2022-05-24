@@ -1,16 +1,25 @@
-import React from 'react';
 
-import './App.css';
-import { Board } from './components/board/Board';
+import React from 'react';
+import { board } from './components/board';
+import { c } from './components/console';
+
+import { ConsoleView } from './components/console/ConsoleView';
 import { BoardView } from './components/board/BoardView';
 
-
+const AppContainer = ({ children }: any) => (
+  <section style={{
+    display: 'flex'
+  }}>
+    {children}
+  </section>
+)
 
 function App() {
   return (
-    <div>
-      
-    </div>
+    <AppContainer>
+      <BoardView board={board} />
+      <ConsoleView c={c}/>
+    </AppContainer>
   );
 }
 
