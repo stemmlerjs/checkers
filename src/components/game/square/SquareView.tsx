@@ -1,23 +1,31 @@
 
 import { useDrop } from "react-dnd";
-import { Piece } from "./Piece";
+import { Piece } from "../pieces/Piece";
 import { Square } from "./Square";
+
+type SquareViewProps = {
+  square: Square;
+  onPieceDropped: (square: Square) => void;
+  children?: any;
+}
+
+/**
+ * @type View
+ */
 
 export const SquareView = ({
   square,
+  onPieceDropped,
   children,
-}: {
-  square: Square;
-  children?: any;
-}) => {
+}: SquareViewProps) => {
   const x = square.getXPosition();
   const y = square.getYPosition();
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: Piece.PIECE_TYPES,
     drop: () => {
-      // Hook up to event listener
-      console.log('time to drop at ', x, y)
+      console.log('dropped', square)
+      onPieceDropped(square);
     },
     collect: monitor => ({
       isOver: !!monitor.isOver(),

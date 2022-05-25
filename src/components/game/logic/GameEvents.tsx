@@ -1,5 +1,6 @@
-import { Piece } from "../board/Piece";
-import { Position } from "../board/Position";
+
+import { Piece } from "../../../components/game/pieces/Piece";
+import { Square } from "../../../components/game/square/Square";
 
 export interface GameEvent {
   name: GameEventName;
@@ -9,7 +10,8 @@ export type GameEventName =
   'PieceDragged' |
   'PieceDropped' | 
   'PieceMoved' |
-  'PieceJumped'
+  'PieceJumped' |
+  'PiecePromoted'
 
 export class PieceDraggedEvent implements GameEvent {
   public name: GameEventName = 'PieceDragged';
@@ -23,10 +25,10 @@ export class PieceDraggedEvent implements GameEvent {
 export class PieceDroppedEvent implements GameEvent {
   public name: GameEventName = 'PieceDropped';
   public piece: Piece;
-  public dropPosition: Position;
+  public square: Square;
 
-  constructor (piece: Piece, dropPosition: Position) {
+  constructor (piece: Piece, square: Square) {
     this.piece = piece;
-    this.dropPosition = dropPosition;
+    this.square = square;
   }
 }

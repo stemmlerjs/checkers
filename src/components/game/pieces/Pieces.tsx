@@ -1,10 +1,13 @@
 
-import { Result } from "../../shared/logic/Result";
-import { coordinator } from "../game";
+import { Result } from "../../../shared/logic/Result";
+import { Square } from "../square/Square";
 import { Piece } from "./Piece";
-import { Square } from "./Square";
 
 type Table = { [index: string]: Piece | undefined };
+
+/**
+ * @type Structurer
+ */
 
 export class Pieces {
   private table: Table = {};
@@ -33,7 +36,7 @@ export class Pieces {
             color: isLightPieceRow ? 'light' : 'dark',
             position: [i, j],
             type: 'initial'
-          }, coordinator);
+          });
         }
       }
     }

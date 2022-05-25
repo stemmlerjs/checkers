@@ -1,8 +1,12 @@
-import { GameEvent, GameEventName } from "./GameEvents";
+import { GameEvent, GameEventName } from "../../../components/game/logic/GameEvents";
 
 type Observer = (event: GameEvent) => void
 
-export class GameEventCoordinator {
+/**
+ * @type Coordinator
+ */
+
+export class EventObserver {
   private observers: { [eventName: string]: Observer[] };
 
   constructor () {

@@ -5,7 +5,13 @@ import lightPiece from './assets/light-piece.svg'
 import { useDrag } from "react-dnd";
 import { useEffect } from "react";
 
-export const PieceView = ({ piece }: { piece: Piece }) => {
+type PieceViewProps = { piece: Piece, onPieceDragged: (piece: Piece) => void }
+
+/**
+ * @type View
+ */
+
+export const PieceView = ({ piece, onPieceDragged }: PieceViewProps ) => {
   let pieceColor = piece.getColor();
   let pieceIcon = pieceColor === 'light' ? lightPiece : darkPiece;
 
@@ -18,7 +24,7 @@ export const PieceView = ({ piece }: { piece: Piece }) => {
 
   useEffect(() => {
     if (isDragging) {
-      piece.handleDrag();
+      onPieceDragged(piece);
     }
   }, [isDragging])
 

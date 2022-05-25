@@ -1,17 +1,27 @@
 
 import { makeAutoObservable } from "mobx";
-import { Result } from "../../shared/logic/Result";
-import { Piece } from "./Piece";
-import { Pieces } from "./Pieces";
-import { Square } from "./Square";
+import { EventObserver } from "../../../shared/infra/observer/EventObserver";
+import { Result } from "../../../shared/logic/Result";
+import { PieceDraggedEvent, PieceDroppedEvent } from "../logic/GameEvents";
+import { Piece } from "../pieces/Piece";
+import { Pieces } from "../pieces/Pieces";
+import { Square } from "../square/Square";
+
+/**
+ * @type Controller
+ * @pattern Facade
+ */
 
 export class Board {
   private squares: Square[][];
   private pieces: Pieces;
+  private observer: EventObserver;
+  private lastPieceDragged: Piece | undefined = undefined;
 
-  constructor(pieces: Pieces) {
+  constructor(pieces: Pieces, observer: EventObserver) {
     this.squares = this.setupSquares();
     this.pieces = pieces;
+    this.observer = observer;
 
     makeAutoObservable(this);
   }
@@ -63,5 +73,15 @@ export class Board {
 
   public getPieceAtSquare (x: number, y: number): Result<Piece> {
     return this.pieces.getPieceAtPosition(x, y);
+  }
+
+  public handlePieceDragged (piece: Piece) {
+    this.observer.emit(new PieceDraggedEvent(piece));
+    this.lastPieceDragged = piece;
+  }
+
+  public handlePieceDropped (square: Square) {
+    this.observer.emit(new PieceDroppedEvent(this.lastPieceDragged as Piece, square));
+    this.lastPieceDragged = undefined;
   }
 }

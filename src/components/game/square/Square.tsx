@@ -1,6 +1,10 @@
-import { NumUtil } from "../../shared/utils/NumUtil";
+import { NumUtil } from "../../../shared/utils/NumUtil";
 
 type Color = 'red' | 'black';
+
+/**
+ * @type Information holder
+ */
 
 export class Square {
   private xPos: number;

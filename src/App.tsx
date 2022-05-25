@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { board } from './components/board';
+import { board } from './components/game';
 import { c } from './components/console';
 
 import { ConsoleView } from './components/console/ConsoleView';
-import { BoardView } from './components/board/BoardView';
+import { BoardView } from './components/game/board/BoardView';
 
 const AppContainer = ({ children }: any) => (
   <section style={{

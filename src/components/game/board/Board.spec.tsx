@@ -1,16 +1,19 @@
-import { Result } from "../../shared/logic/Result";
+
+import { Result } from "../../../shared/logic/Result";
 import { Board } from "./Board"
-import { Pieces } from "./Pieces";
-import { Square } from "./Square";
+import { Pieces } from "../pieces/Pieces";
+import { Square } from "../square/Square";
+import { EventObserver } from "../../../shared/infra/observer/EventObserver";
 
 describe('board', () => {
   
   let board: Board;
   let squares: Square[][];
   let maybeSquare: Result<Square>;
+  let eventObserver = new EventObserver();
 
   beforeEach(() => {
-    board = new Board(Pieces.createWithInitialPositions());
+    board = new Board(Pieces.createWithInitialPositions(), eventObserver);
     squares = board.getSquares();
   })
 
@@ -40,13 +43,12 @@ describe('board', () => {
 
   it ('places the dark pieces on the correct squares', () => {
     let maybePiece = board.getPieceAtSquare(0, 5);
-
     expect(maybePiece.getValue().getColor()).toEqual('dark');
   })
 
   it ('safely notifies when a piece was not found at a position', () => {
     let maybePiece = board.getPieceAtSquare(0, 0);
-
     expect(maybePiece.isFailure).toEqual(true);
   });
+
 })
