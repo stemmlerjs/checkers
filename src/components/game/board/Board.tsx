@@ -7,8 +7,6 @@ import { Piece } from "../pieces/Piece";
 import { Pieces } from "../pieces/Pieces";
 import { Square } from "../square/Square";
 
-type GameState = 'Idle' | 'Dragging' | 'Jumping'
-
 /**
  * @type Controller
  * @pattern Facade

@@ -1,6 +1,7 @@
 
 import { board } from "..";
 import { Piece } from "../pieces/Piece";
+import { Pieces } from "../pieces/Pieces";
 import { Turn } from "./Turn";
 
 type MovePieceResult = 'Success' | 'InvalidPieceId' | 'PieceCaptured' | 'InvalidMovement'
@@ -14,8 +15,10 @@ type MovePieceResult = 'Success' | 'InvalidPieceId' | 'PieceCaptured' | 'Invalid
 export class GameService {
   
   private currentTurn: Turn;
+  private pieces: Pieces;
 
-  constructor () {
+  constructor (pieces: Pieces) {
+    this.pieces = pieces;
     this.currentTurn = new Turn('red');
   }
 
@@ -38,15 +41,23 @@ export class GameService {
       return 'PieceCaptured'
     }
     
-    // Determine if movement is valid
-    const canMove = piece.canMoveTo(x, y) && !board.hasPieceAtSquare(x, y);
+    // // Determine if movement is valid
+    // const canMove = piece.canMoveTo(x, y) && !board.hasPieceAtSquare(x, y);
 
-    if (canMove) {
-      board.movePiece(piece, x, y);
-    }
+    // // Move piece
+    // if (canMove) {
+    //   board.movePiece(piece, x, y);
+    // }
+
+    // New turn
+    this.completeTurn();
 
     // If valid, return OK result
     return 'Success'
+  }
+
+  private completeTurn (): void {
+    this.currentTurn = this.currentTurn.next();
   }
 
   public isGameOver (): boolean {
