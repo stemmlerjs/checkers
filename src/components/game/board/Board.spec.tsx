@@ -36,14 +36,14 @@ describe('board', () => {
     expect(maybeSquare.getValue().getColor()).toEqual('black');
   });
 
-  it ('places the light pieces on the correct squares', () => {
+  it ('places the white pieces on the correct squares', () => {
     let maybePiece = board.getPieceAtSquare(1, 0);
-    expect(maybePiece.getValue().getColor()).toEqual('light');
+    expect(maybePiece.getValue().getColor()).toEqual('white');
   });
 
   it ('places the dark pieces on the correct squares', () => {
     let maybePiece = board.getPieceAtSquare(0, 5);
-    expect(maybePiece.getValue().getColor()).toEqual('dark');
+    expect(maybePiece.getValue().getColor()).toEqual('red');
   })
 
   it ('safely notifies when a piece was not found at a position', () => {

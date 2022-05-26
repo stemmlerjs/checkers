@@ -22,7 +22,7 @@ export class Pieces {
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
         
-        const isLightPieceRow = j == 0 || j <= 2;
+        const isLightPieceRow = j === 0 || j <= 2;
         const isDarkPieceRow = j >= 5;
         const isDarkSquare = Square.getSquareColor(i, j) === 'black';
 
@@ -33,7 +33,7 @@ export class Pieces {
           table[`${i}:${j}`] = undefined;
         } else {
           table[`${i}:${j}`] = new Piece({
-            color: isLightPieceRow ? 'light' : 'dark',
+            color: isLightPieceRow ? 'white' : 'red',
             position: [i, j],
             type: 'initial'
           });

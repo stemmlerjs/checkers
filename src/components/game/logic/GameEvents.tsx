@@ -24,11 +24,9 @@ export class PieceDraggedEvent implements GameEvent {
 
 export class PieceDroppedEvent implements GameEvent {
   public name: GameEventName = 'PieceDropped';
-  public piece: Piece;
   public square: Square;
 
-  constructor (piece: Piece, square: Square) {
-    this.piece = piece;
+  constructor (square: Square) {
     this.square = square;
   }
 }

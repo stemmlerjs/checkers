@@ -1,7 +1,7 @@
 
-type Position = [number, number]
-type PieceColor = "light" | "dark";
-type PieceType = "initial" | "king";
+export type Position = [number, number]
+export type PieceColor = "white" | "red";
+export type PieceType = "initial" | "king";
 
 type PieceProps = {
   color: PieceColor;

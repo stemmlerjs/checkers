@@ -13,7 +13,7 @@ type PieceViewProps = { piece: Piece, onPieceDragged: (piece: Piece) => void }
 
 export const PieceView = ({ piece, onPieceDragged }: PieceViewProps ) => {
   let pieceColor = piece.getColor();
-  let pieceIcon = pieceColor === 'light' ? lightPiece : darkPiece;
+  let pieceIcon = pieceColor === 'white' ? lightPiece : darkPiece;
 
   const [{isDragging}, drag] = useDrag(() => ({
     type: piece.getPieceType(),

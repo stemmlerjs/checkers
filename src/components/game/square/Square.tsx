@@ -1,6 +1,6 @@
-import { NumUtil } from "../../../shared/utils/NumUtil";
 
-type Color = 'red' | 'black';
+import { NumUtil } from "../../../shared/utils/NumUtil";
+type SquareColor = 'red' | 'black';
 
 /**
  * @type Information holder
@@ -10,7 +10,7 @@ export class Square {
   private xPos: number;
   private yPos: number;
   private index: number;
-  private color: Color;
+  private color: SquareColor;
 
   constructor (xPos: number, yPos: number, index: number) {
     this.xPos = xPos;
@@ -19,7 +19,7 @@ export class Square {
     this.color = Square.getSquareColor(xPos, yPos);
   }
   
-  public static getSquareColor (xColumn: number, yRow: number) : Color {
+  public static getSquareColor (xColumn: number, yRow: number) : SquareColor {
     let isRowEven = NumUtil.isEven(xColumn);
     let isColumnEven = NumUtil.isEven(yRow);
 
@@ -50,7 +50,7 @@ export class Square {
     return this.yPos;
   }
 
-  getColor (): Color {
+  getColor (): SquareColor {
     return this.color;
   }
 }

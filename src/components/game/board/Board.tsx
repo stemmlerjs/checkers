@@ -7,6 +7,8 @@ import { Piece } from "../pieces/Piece";
 import { Pieces } from "../pieces/Pieces";
 import { Square } from "../square/Square";
 
+type GameState = 'Idle' | 'Dragging' | 'Jumping'
+
 /**
  * @type Controller
  * @pattern Facade
@@ -16,7 +18,6 @@ export class Board {
   private squares: Square[][];
   private pieces: Pieces;
   private observer: EventObserver;
-  private lastPieceDragged: Piece | undefined = undefined;
 
   constructor(pieces: Pieces, observer: EventObserver) {
     this.squares = this.setupSquares();
@@ -77,11 +78,9 @@ export class Board {
 
   public handlePieceDragged (piece: Piece) {
     this.observer.emit(new PieceDraggedEvent(piece));
-    this.lastPieceDragged = piece;
   }
 
   public handlePieceDropped (square: Square) {
-    this.observer.emit(new PieceDroppedEvent(this.lastPieceDragged as Piece, square));
-    this.lastPieceDragged = undefined;
+    this.observer.emit(new PieceDroppedEvent(square));
   }
 }

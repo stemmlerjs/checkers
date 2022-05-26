@@ -29,7 +29,7 @@ export class Console {
   private handlePieceDropped(event: GameEvent) {
     let e = event as PieceDroppedEvent;
     this.appendMessage(
-      `${e.piece.getColor()} piece was dropped at ${e.square.getXPosition()}, ${e.square.getYPosition()}`
+      `piece was dropped at ${e.square.getXPosition()}, ${e.square.getYPosition()}`
     );
   }
 
