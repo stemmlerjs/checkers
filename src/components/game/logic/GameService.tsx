@@ -36,7 +36,6 @@ export class GameService {
 
     piece = maybePiece.getValue(); 
 
-    // If piece is captured, return in
     if (piece.isCaptured()) {
       return 'PieceCaptured'
     }
