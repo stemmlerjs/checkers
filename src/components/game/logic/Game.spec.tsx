@@ -2,12 +2,12 @@
 import { EventObserver } from "../../../shared/infra/observer/EventObserver";
 import { Board } from "../board/Board";
 import { Pieces } from "../pieces/Pieces";
-import { GameController } from "./GameController"
+import { Game } from "./Game";
 import { Turn } from "./Turn";
 
 describe('game', () => {
 
-  let game: GameController;
+  let game: Game;
   let pieces: Pieces;
   let turn: Turn;
   let board: Board;
@@ -15,7 +15,7 @@ describe('game', () => {
   beforeEach(() => {
     pieces = Pieces.createWithInitialPositions();
     board = new Board(pieces, new EventObserver());
-    game = new GameController(board);
+    game = new Game(board);
   })
 
   it('knows that red goes first', () => {
