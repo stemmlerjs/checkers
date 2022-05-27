@@ -3,7 +3,7 @@ import { makeAutoObservable } from "mobx";
 import { EventObserver } from "../../../shared/infra/observer/EventObserver";
 import { Result } from "../../../shared/logic/Result";
 import { PieceDraggedEvent, PieceDroppedEvent } from "../logic/GameEvents";
-import { Piece } from "../pieces/Piece";
+import { Piece, Position } from "../pieces/Piece";
 import { Pieces } from "../pieces/Pieces";
 import { Square } from "../square/Square";
 
@@ -55,6 +55,32 @@ export class Board {
 
   public getSquares (): Square[][] {
     return this.squares;
+  }
+
+  public setDroppableSquares (positions: Position[]) {
+    let droppableMap: { [position: string]: boolean } = {};
+    positions.forEach((p) => { 
+      droppableMap[`${p[0]}:${p[1]}`] = true
+    });
+
+    for (let i = 0; i < this.squares.length; i++) {
+      for (let j = 0; j < this.squares[i].length; j++) {
+        let square = this.squares[i][j];
+        let isDroppable = droppableMap.hasOwnProperty(`${square.getXPosition()}:${square.getYPosition()}`)
+        if (isDroppable) {
+          console.log('setting droppable', square)
+          square.setDroppable(isDroppable);
+        }
+      }
+    }
+  }
+
+  public clearDroppableSquares (): void {
+    for (let i = 0; i < this.squares.length; i++) {
+      for (let j = 0; j < this.squares[i].length; j++) {
+        this.squares[i][j].setDroppable(false);
+      }
+    }
   }
 
   public printBoard (): void {

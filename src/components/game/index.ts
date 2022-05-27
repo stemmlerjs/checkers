@@ -16,4 +16,3 @@ new GameController(game, eventObserver);
 export {
   board
 }
-

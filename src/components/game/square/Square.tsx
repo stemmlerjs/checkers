@@ -11,12 +11,14 @@ export class Square {
   private yPos: number;
   private index: number;
   private color: SquareColor;
+  private droppable: boolean;
 
-  constructor (xPos: number, yPos: number, index: number) {
+  constructor (xPos: number, yPos: number, index: number, droppable?: boolean) {
     this.xPos = xPos;
     this.yPos = yPos;
     this.index = index;
     this.color = Square.getSquareColor(xPos, yPos);
+    this.droppable = false;
   }
   
   public static getSquareColor (xColumn: number, yRow: number) : SquareColor {
@@ -52,5 +54,13 @@ export class Square {
 
   getColor (): SquareColor {
     return this.color;
+  }
+
+  isDroppable (): boolean {
+    return this.droppable;
+  }
+
+  public setDroppable (droppable: boolean): void {
+    this.droppable = droppable;
   }
 }

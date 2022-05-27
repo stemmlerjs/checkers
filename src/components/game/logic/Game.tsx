@@ -1,3 +1,4 @@
+import { Result } from "../../../shared/logic/Result";
 import { Board } from "../board/Board";
 import { Piece, Position } from "../pieces/Piece";
 import { Move, Movement } from "./GameCommands";
@@ -26,18 +27,24 @@ export class Game {
     return this.currentTurn;
   }
 
-  public getAvailableMovesForPiece (pieceId: string): GetAvailableMovesResult {
+  public getAvailableMovesForPiece (pieceOrPieceId: Piece | string): GetAvailableMovesResult {
     let moves: Movement[] = [];
     let pieces = this.board.getPieces();
     let piece: Piece;
-    let maybePiece = pieces.findPieceById(pieceId);
+    let maybePiece: Result<Piece>;
 
-    if (maybePiece.isFailure) {
-      return { type: 'InvalidPieceId' }
+    if (typeof pieceOrPieceId === 'string') {
+      maybePiece = pieces.findPieceById(pieceOrPieceId);
+
+      if (maybePiece.isFailure) {
+        return { type: 'InvalidPieceId' }
+      }
+
+      piece = maybePiece.getValue(); 
+    } else {
+      piece = pieceOrPieceId as Piece;
     }
-
-    piece = maybePiece.getValue(); 
-
+    
     if (piece.isCaptured()) {
       return { type: 'PieceCaptured' }
     }
@@ -117,10 +124,19 @@ export class Game {
   }
 
   handlePieceDragged (e: PieceDraggedEvent) {
+    let result = this.getAvailableMovesForPiece(e.piece);
 
+    if (result.type !== 'Success') {
+      return;
+    } 
+    
+    let moves = result.data as Move[];
+    let positions = moves.map((m) => m.getTo());
+
+    this.board.setDroppableSquares(positions);
   }
 
   handlePieceDropped(e: PieceDroppedEvent) {
-    
+    this.board.clearDroppableSquares();
   }
 }
