@@ -49,4 +49,9 @@ export class Piece {
         : "W" + this.props.index;
     return id;
   }
+
+  getPosition (): Position {
+    return this.props.position;
+  }
+  
 }

@@ -65,6 +65,10 @@ export class Board {
     }
   }
 
+  public getPieces (): Pieces {
+    return this.pieces;
+  }
+
   public hasPieceAtSquare (x: number, y: number): boolean {
     // Note: This is pretty much just passing params.
     return this.pieces.hasPieceAtPosition(x, y);

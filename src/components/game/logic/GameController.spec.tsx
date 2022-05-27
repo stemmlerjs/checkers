@@ -1,17 +1,21 @@
 
+import { EventObserver } from "../../../shared/infra/observer/EventObserver";
+import { Board } from "../board/Board";
 import { Pieces } from "../pieces/Pieces";
-import { GameService } from "./GameService"
+import { GameController } from "./GameController"
 import { Turn } from "./Turn";
 
 describe('game', () => {
 
-  let game: GameService;
+  let game: GameController;
   let pieces: Pieces;
   let turn: Turn;
+  let board: Board;
 
   beforeEach(() => {
     pieces = Pieces.createWithInitialPositions();
-    game = new GameService(pieces);
+    board = new Board(pieces, new EventObserver());
+    game = new GameController(board);
   })
 
   it('knows that red goes first', () => {
@@ -21,7 +25,7 @@ describe('game', () => {
   });
 
   it('knows that white goes after red', () => {
-    game.movePiece('R1', 1, 4);
+    game.movePiece('R1', [1, 4]);
 
     turn = game.getCurrentTurn();
 
@@ -29,9 +33,14 @@ describe('game', () => {
     expect(turn.getTurnNumber()).toEqual(2);
   });
 
-  it('knows that we can only move a piece vertically', () => {
-
+  it('knows that we cannot move a red piece horizontally', () => {
+    let movePieceResult = game.movePiece('R1', [1, 5]);
+    expect(movePieceResult).toEqual('InvalidMovement');
   });
+
+  it ('can get the available moves for a piece', () => {
+
+  })
 
   it('knows that we cant move a piece off the grid', () => {
 
