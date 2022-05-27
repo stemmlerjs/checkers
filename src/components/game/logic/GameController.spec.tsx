@@ -39,7 +39,11 @@ describe('game', () => {
   });
 
   it ('can get the available moves for a piece', () => {
-
+    let response = game.getAvailableMovesForPiece('R1');
+    expect(response.type).toEqual('Success');
+    expect(response.data?.length).toEqual(1);
+    console.log(response.data)
+    expect(response.data?.[0].getTo()).toEqual([1,4])
   })
 
   it('knows that we cant move a piece off the grid', () => {

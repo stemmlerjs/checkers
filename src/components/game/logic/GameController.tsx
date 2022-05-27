@@ -2,11 +2,16 @@
 import { Board } from "../board/Board";
 import { Piece, Position } from "../pieces/Piece";
 import { Pieces } from "../pieces/Pieces";
-import { Movement } from "./GameCommands";
+import { Jump, Move, Movement } from "./GameCommands";
 import { MoveService } from "./MoveService";
 import { Turn } from "./Turn";
 
 type MovePieceResult = 'Success' | 'InvalidPieceId' | 'PieceCaptured' | 'InvalidMovement'
+
+type GetAvailableMovesResult = {
+  type: 'Success' | 'InvalidPieceId' | 'PieceCaptured';
+  data?: Movement[]
+}
 
 /**
  * @type Controller, Service Provider
@@ -29,9 +34,42 @@ export class GameController {
     return this.currentTurn;
   }
 
-  // public getAvailableMovesForPiece (piece: Piece): Movement[] {
+  public getAvailableMovesForPiece (pieceId: string): GetAvailableMovesResult {
+    let moves: Movement[] = [];
+    let pieces = this.board.getPieces();
+    let piece: Piece;
+    let maybePiece = pieces.findPieceById(pieceId);
+
+    if (maybePiece.isFailure) {
+      return { type: 'InvalidPieceId' }
+    }
+
+    piece = maybePiece.getValue(); 
+
+    if (piece.isCaptured()) {
+      return { type: 'PieceCaptured' }
+    }
+
+    piece
+      .getDiagonals()
+      .forEach((diagonal) => {
+        const isSquareTaken = this.board.hasPieceAtSquare(diagonal[0], diagonal[1])
+        const isEnemyPiece = isSquareTaken && this.board.getPieceAtSquare(diagonal[0], diagonal[1]).getValue().getColor() !== piece.getColor();
+        const canJumpEnemyPiece = isEnemyPiece 
+
+        if (canJumpEnemyPiece) {
+          // If it has a piece AND the piece is an enemy piece AND there is space to 
+          // jump it, then that's the only move we're allowed to make
+          // moves = [new Jump(piece.getPosition(), )]
+          // break;
+        }
+
+        moves.push(new Move(piece.getPosition(), diagonal));
+
+      })
     
-  // }
+    return { type: 'Success', data: moves }
+  }
 
   public movePiece (pieceId: string, targetPosition: Position): MovePieceResult {
     let board = this.board;
