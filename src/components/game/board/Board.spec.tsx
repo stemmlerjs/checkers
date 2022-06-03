@@ -13,7 +13,7 @@ describe('board', () => {
   let eventObserver = new EventObserver();
 
   beforeEach(() => {
-    board = new Board(Pieces.createWithInitialPositions(), eventObserver);
+    board = new Board(new Pieces(), eventObserver);
     squares = board.getSquares();
   })
 

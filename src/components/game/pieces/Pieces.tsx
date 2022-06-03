@@ -13,12 +13,12 @@ type Table = { [index: string]: Piece | undefined | string };
 export class Pieces {
   private table: Table = {};
 
-  private constructor(table: Table) {
-    this.table = table;
+  public constructor() {
+    this.table = this.setupPiecesOnTable();
     makeAutoObservable(this);
   }
 
-  public static createWithInitialPositions(): Pieces {
+  private setupPiecesOnTable (): Table {
     let table: Table = {};
     let redPieceIndex = 1;
     let whitePieceIndex = 1;
@@ -53,7 +53,7 @@ export class Pieces {
       }
     }
 
-    return new Pieces(table);
+    return table;
   }
 
   public hasPieceAtPosition(x: number, y: number): boolean {

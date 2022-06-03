@@ -3,6 +3,7 @@ import { EventObserver } from "../../../shared/infra/observer/EventObserver";
 import { Board } from "../board/Board";
 import { Pieces } from "../pieces/Pieces";
 import { Game } from "./Game";
+import { PieceMovedEvent } from "./GameEvents";
 import { Turn } from "./Turn";
 
 describe('initial game behavior', () => {
@@ -13,7 +14,7 @@ describe('initial game behavior', () => {
   let board: Board;
 
   beforeEach(() => {
-    pieces = Pieces.createWithInitialPositions();
+    pieces = new Pieces();
     board = new Board(pieces, new EventObserver());
     game = new Game(board);
   });
@@ -107,7 +108,47 @@ describe('initial game behavior', () => {
   })
 });
 
+describe('starting a game from events', () => {
+  let game: Game;
+  let pieces: Pieces;
+  let turn: Turn;
+  let board: Board;
+
+  beforeEach(() => {
+    pieces = new Pieces();
+    board = new Board(pieces, new EventObserver());
+    game = new Game(board);
+  });
+
+  it('replays the events and starts the game from that state', () => {
+    // game = new Game(board, [
+    //   new PieceMovedEvent('R1', []),
+    //   new PieceMovedEvent(),
+    //   new PieceMovedEvent('')
+    // ])
+  });
+
+  it('fails to start the game from this state if events are invalid or illegal', () => {
+    // game = new Game(board, [
+    //   new PieceMovedEvent('R1', []),
+    //   new PieceMovedEvent(),
+    //   new PieceMovedEvent('')
+    // ])
+  });
+})
+
 describe('jumping pieces', () => {
+
+  let game: Game;
+  let pieces: Pieces;
+  let turn: Turn;
+  let board: Board;
+
+  beforeEach(() => {
+    pieces = new Pieces();
+    board = new Board(pieces, new EventObserver());
+    game = new Game(board);
+  });
 
   // Relies on game state for testing
   it('knows that you must multi jump if presented', () => {

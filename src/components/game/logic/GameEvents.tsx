@@ -1,5 +1,5 @@
 
-import { Piece } from "../../../components/game/pieces/Piece";
+import { Piece, Position } from "../../../components/game/pieces/Piece";
 import { Square } from "../../../components/game/square/Square";
 
 export interface GameEvent {
@@ -28,5 +28,16 @@ export class PieceDroppedEvent implements GameEvent {
 
   constructor (square: Square) {
     this.square = square;
+  }
+}
+
+export class PieceMovedEvent implements GameEvent {
+  public name: GameEventName = 'PieceMoved';
+  public pieceId: string;
+  public position: Position;
+
+  constructor (pieceId: string, position: Position) {
+    this.pieceId = pieceId;
+    this.position = position;
   }
 }
