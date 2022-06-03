@@ -1,6 +1,7 @@
 
 import { makeAutoObservable } from "mobx";
 import { NumUtil } from "../../../shared/utils/NumUtil";
+import { Position } from "../pieces/Piece";
 type SquareColor = 'red' | 'black';
 
 /**
@@ -57,6 +58,10 @@ export class Square {
 
   getColor (): SquareColor {
     return this.color;
+  }
+
+  getPosition (): Position {
+    return [this.getXPosition(), this.getYPosition()]
   }
 
   isDroppable (): boolean {

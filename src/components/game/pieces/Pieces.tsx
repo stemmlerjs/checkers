@@ -1,6 +1,7 @@
+import { makeAutoObservable } from "mobx";
 import { Result } from "../../../shared/logic/Result";
 import { Square } from "../square/Square";
-import { Piece } from "./Piece";
+import { Piece, Position } from "./Piece";
 
 type Table = { [index: string]: Piece | undefined | string };
 
@@ -13,6 +14,7 @@ export class Pieces {
 
   private constructor(table: Table) {
     this.table = table;
+    makeAutoObservable(this);
   }
 
   public static createWithInitialPositions(): Pieces {
@@ -75,5 +77,23 @@ export class Pieces {
     const piece = this.table[maybePiecePosition as string] as Piece;
 
     return Result.ok<Piece>(piece); 
+  }
+
+  public updatePiecePosition (piece: Piece, nextPosition: Position): void {
+    let prevPosition = piece.getPosition();
+    let oldHashPosition = `${prevPosition[0]}:${prevPosition[1]}`;
+
+    let newHashPosition = `${nextPosition[0]}:${nextPosition[1]}`;
+    let newPiece = new Piece({
+      ...piece.getProps(),
+      position: nextPosition
+    });
+
+    // // Clear old position
+    this.table[oldHashPosition] = undefined;
+
+    // Set new
+    this.table[newHashPosition] = newPiece;
+    this.table[newPiece.getId()] = newHashPosition;
   }
 }

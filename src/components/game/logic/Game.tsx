@@ -15,6 +15,7 @@ type GetAvailableMovesResult = {
 
 export class Game {
   private currentTurn: Turn;
+  private lastDraggedPiece: Piece | undefined;
   private board: Board;
   private moveService: MoveService = new MoveService();
 
@@ -102,8 +103,7 @@ export class Game {
       return 'InvalidMovement';
     }
 
-    // // Move piece
-    // board.movePiece(piece, x, y);
+    pieces.updatePiecePosition(piece, targetPosition);
 
     // New turn
     this.completeTurn();
@@ -125,6 +125,10 @@ export class Game {
     return hasRedPieces === false || hasBlackPieces === false;
   }
 
+  private setLastDraggedPiece(piece: Piece | undefined): void {
+    this.lastDraggedPiece = piece;
+  }
+
   handlePieceDragged (e: PieceDraggedEvent) {
     let result = this.getAvailableMovesForPiece(e.piece);
 
@@ -134,11 +138,17 @@ export class Game {
     
     let moves = result.data as Move[];
     let positions = moves.map((m) => m.getTo());
-
+    
+    this.setLastDraggedPiece(e.piece);
     this.board.setDroppableSquares(positions);
   }
 
   handlePieceDropped(e: PieceDroppedEvent) {
+    let piece = this.lastDraggedPiece as Piece;
+
+    this.movePiece(piece.getId(),e.square.getPosition())
+
+    this.setLastDraggedPiece(undefined);
     this.board.clearDroppableSquares();
   }
 }

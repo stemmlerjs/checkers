@@ -5,7 +5,7 @@ import { Pieces } from "../pieces/Pieces";
 import { Game } from "./Game";
 import { Turn } from "./Turn";
 
-describe('game', () => {
+describe('initial game behavior', () => {
 
   let game: Game;
   let pieces: Pieces;
@@ -44,6 +44,16 @@ describe('game', () => {
     it('knows that we cannot move a piece vertically', () => {
       let movePieceResult = game.movePiece('R1', [0, 4]);
       expect(movePieceResult).toEqual('InvalidMovement');
+    });
+
+    it ('knows that white pieces can move downward', () => {
+      let movePieceResult = game.movePiece('W3', [0, 3]);
+      expect(movePieceResult).toEqual('Success');
+    })
+  
+    it ('knows that red pieces can move upward', () => {
+      let movePieceResult = game.movePiece('R1', [1, 4]);
+      expect(movePieceResult).toEqual('Success');
     });
   })
 
@@ -87,53 +97,54 @@ describe('game', () => {
       expect(moves?.length).toEqual(1);
     });
   })
+});
 
+describe('jumping pieces', () => {
+
+  // Relies on game state for testing
+  it('knows that you must multi jump if presented', () => {
+
+  });
+
+  // Relies on a game state for testing
+  it('knows that a jumped piece is removed from the board and decrements the count', () => {
+
+  });
+
+  // Relies on game state for testing
+  it('knows that you can multi jump off of the walls', () => {
+
+  });
   
+});
 
-  
 
-  
+describe('promoting pieces', () => {
 
-  
+  // Relies on a game state for testing
+  it('knows that a piece which advances to the end gets promoted', () => {
 
-  it ('knows that white pieces move downward and cannot move upward', () => {
+  });
+
+  it ('knows that promoted pieces can move upwards and downwards', () => {
 
   })
 
-  it ('knows that red pieces move upward and cannot move downward', () => {
+});
 
-  });
+
+describe('a completed game', () => {
 
   it ('knows when the game is over', () => {
 
-  })
+  });
 
-  it('knows that a red|white piece which advances to the end gets promoted', () => {
-
-  })
-
-  it('knows that a jumped piece is removed from the board and decrements the count', () => {
-
-  })
-
-  it('knows that you must jump a piece if at the start of the next move, it is presented', () => {
+  it('does not allow players to make any further moves', () => {
 
   });
 
-  it('knows that you must multi jump if presented', () => {
+  it('can be restarted', () => {
 
-  })
-
-  it('knows that you can multi jump off of the walls', () => {
-
-  })
-
-  it ('knows that a piece becomes promoted to a king once it makes it to the end', () => {
-
-  })
-
-  it('can restart the game', () => {
-
-  })
+  });
 
 })

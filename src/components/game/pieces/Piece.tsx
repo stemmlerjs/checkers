@@ -27,6 +27,10 @@ export class Piece {
       : false;
   }
 
+  public getProps (): PieceProps {
+    return this.props;
+  }
+
   public setCaptured (): void {
     this.props.isCaptured = true;
   }
