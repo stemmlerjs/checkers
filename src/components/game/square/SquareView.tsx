@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { observer } from "mobx-react-lite";
 import { useDrop } from "react-dnd";
 import { Piece } from "../pieces/Piece";
 import { Square } from "./Square";
@@ -13,7 +14,7 @@ type SquareViewProps = {
  * @type View
  */
 
-export const SquareView = ({
+export const SquareView = observer((({
   square,
   onPieceDropped,
   children,
@@ -21,14 +22,10 @@ export const SquareView = ({
   const x = square.getXPosition();
   const y = square.getYPosition();
 
-  const [{ isOver }, drop] = useDrop(
+  const [{ }, drop] = useDrop(
     () => ({
       accept: Piece.PIECE_TYPES,
-      hover: (props, monitor) => {
-
-      },
       drop: () => {
-        console.log("dropped", square);
         onPieceDropped(square);
       },
       collect: (monitor) => ({
@@ -51,4 +48,5 @@ export const SquareView = ({
       {children ? children : ""}
     </div>
   );
-};
+}));
+

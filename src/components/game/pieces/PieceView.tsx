@@ -26,7 +26,7 @@ export const PieceView = ({ piece, onPieceDragged }: PieceViewProps ) => {
     if (isDragging) {
       onPieceDragged(piece);
     }
-  }, [isDragging])
+  }, [isDragging, onPieceDragged, piece])
 
   return (
     <div 
@@ -38,6 +38,7 @@ export const PieceView = ({ piece, onPieceDragged }: PieceViewProps ) => {
         fontWeight: 'bold',
         cursor: 'move',
       }}>
+      <div className="pieceId">{piece.getId()}</div>
       <img src={pieceIcon}/>
     </div>
   )

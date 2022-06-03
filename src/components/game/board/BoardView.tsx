@@ -1,4 +1,5 @@
-import { observer } from "mobx-react";
+
+import { observer } from "mobx-react-lite";
 import { Board } from "./Board";
 import "./BoardView.css";
 import { DndProvider } from "react-dnd";

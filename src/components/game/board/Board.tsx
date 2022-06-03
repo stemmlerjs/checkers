@@ -81,6 +81,8 @@ export class Board {
         this.squares[i][j].setDroppable(false);
       }
     }
+
+    console.log('Cleared droppable squares', this.squares)
   }
 
   public printBoard (): void {

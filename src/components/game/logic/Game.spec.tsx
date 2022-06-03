@@ -16,7 +16,7 @@ describe('game', () => {
     pieces = Pieces.createWithInitialPositions();
     board = new Board(pieces, new EventObserver());
     game = new Game(board);
-  })
+  });
 
   it('knows that red goes first', () => {
     turn = game.getCurrentTurn();
@@ -47,14 +47,16 @@ describe('game', () => {
 
   it ('can get the available moves for an initial middle piece', () => {
     let response = game.getAvailableMovesForPiece('R4');
+    let moves = response.data;
+
     expect(response.type).toEqual('Success');
-    expect(response.data?.length).toEqual(2);
-    expect(response.data?.[0].getTo()).toEqual([1,4])
-    expect(response.data?.[1].getTo()).toEqual([3,4])
+    expect(moves?.length).toEqual(2);
+    expect(moves?.[0].getTo()).toEqual([1,4]);
+    expect(moves?.[1].getTo()).toEqual([3,4]);
   })
 
   it('knows that we cant move a piece off the grid', () => {
-
+    
   });
 
   it('knows that we cannot move a piece horizontal or vertically', () => {
@@ -87,13 +89,17 @@ describe('game', () => {
 
   it('knows that you must jump a piece if at the start of the next move, it is presented', () => {
 
-  })
+  });
 
   it('knows that you must multi jump if presented', () => {
 
   })
 
   it('knows that you can multi jump off of the walls', () => {
+
+  })
+
+  it ('knows that a piece becomes promoted to a king once it makes it to the end', () => {
 
   })
 

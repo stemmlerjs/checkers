@@ -14,6 +14,19 @@
   box-sizing: border-box;
 }
 
+.piece {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.pieceId {
+  position: absolute;
+  font-size: 1rem;
+  top: 24px;
+}
+
 .color-red {
   background-color: #ee1a24;
 }

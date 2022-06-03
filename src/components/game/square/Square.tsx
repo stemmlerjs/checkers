@@ -1,4 +1,5 @@
 
+import { makeAutoObservable } from "mobx";
 import { NumUtil } from "../../../shared/utils/NumUtil";
 type SquareColor = 'red' | 'black';
 
@@ -19,6 +20,8 @@ export class Square {
     this.index = index;
     this.color = Square.getSquareColor(xPos, yPos);
     this.droppable = false;
+
+    makeAutoObservable(this);
   }
   
   public static getSquareColor (xColumn: number, yRow: number) : SquareColor {
