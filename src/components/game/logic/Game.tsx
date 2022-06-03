@@ -6,7 +6,7 @@ import { PieceDraggedEvent, PieceDroppedEvent } from "./GameEvents";
 import { MoveService } from "./MoveService";
 import { Turn } from "./Turn";
 
-type MovePieceResult = 'Success' | 'InvalidPieceId' | 'PieceCaptured' | 'InvalidMovement'
+type MovePieceResult = 'Success' | 'InvalidPieceId' | 'PieceCaptured' | 'InvalidMovement' | 'InvalidTurn'
 
 type GetAvailableMovesResult = {
   type: 'Success' | 'InvalidPieceId' | 'PieceCaptured';
@@ -26,6 +26,10 @@ export class Game {
 
   public getCurrentTurn (): Turn {
     return this.currentTurn;
+  }
+
+  private isAllowedToMoveThisTurn (piece: Piece): boolean {
+    return piece.getColor() === this.currentTurn.getColor();
   }
 
   public getAvailableMovesForPiece (pieceOrPieceId: Piece | string): GetAvailableMovesResult {
@@ -87,6 +91,10 @@ export class Game {
 
     if (piece.isCaptured()) {
       return 'PieceCaptured'
+    }
+
+    if (!this.isAllowedToMoveThisTurn(piece)) {
+      return 'InvalidTurn'
     }
 
     // First, determine if the player MUST jump a piece that has been presented

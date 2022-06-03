@@ -33,6 +33,12 @@ describe('initial game behavior', () => {
       expect(turn.getColor()).toEqual('white');
       expect(turn.getTurnNumber()).toEqual(2);
     });
+
+    it('knows that at the start of a new game, we must take turns moving pieces', () => {
+      game.movePiece('R1', [1, 4]);
+      let result = game.movePiece('R4', [3, 4]);
+      expect(result).toEqual('InvalidTurn');
+    });
   });
 
   describe('directionality', () => {
@@ -47,7 +53,9 @@ describe('initial game behavior', () => {
     });
 
     it ('knows that white pieces can move downward', () => {
+      game.movePiece('R1', [1, 4]);
       let movePieceResult = game.movePiece('W3', [0, 3]);
+
       expect(movePieceResult).toEqual('Success');
     })
   
