@@ -54,7 +54,9 @@ export class Game {
       .forEach((diagonal) => {
         const isSquareTaken = this.board.hasPieceAtSquare(diagonal[0], diagonal[1])
         const isEnemyPiece = isSquareTaken && this.board.getPieceAtSquare(diagonal[0], diagonal[1]).getValue().getColor() !== piece.getColor();
-        const canJumpEnemyPiece = isEnemyPiece 
+        const canJumpEnemyPiece = isEnemyPiece;
+
+        if (isSquareTaken) return;
 
         if (canJumpEnemyPiece) {
           // If it has a piece AND the piece is an enemy piece AND there is space to 

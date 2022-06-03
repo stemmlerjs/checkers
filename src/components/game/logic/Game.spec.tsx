@@ -18,54 +18,83 @@ describe('game', () => {
     game = new Game(board);
   });
 
-  it('knows that red goes first', () => {
-    turn = game.getCurrentTurn();
-    expect(turn.getColor()).toEqual('red');
-    expect(turn.getTurnNumber()).toEqual(1);
+  describe('turns', () => {
+    it('knows that red goes first', () => {
+      turn = game.getCurrentTurn();
+      expect(turn.getColor()).toEqual('red');
+      expect(turn.getTurnNumber()).toEqual(1);
+    });
+  
+    it('knows that white goes after red', () => {
+      game.movePiece('R1', [1, 4]);
+  
+      turn = game.getCurrentTurn();
+  
+      expect(turn.getColor()).toEqual('white');
+      expect(turn.getTurnNumber()).toEqual(2);
+    });
   });
 
-  it('knows that white goes after red', () => {
-    game.movePiece('R1', [1, 4]);
+  describe('directionality', () => {
+    it('knows that we cannot move a piece horizontally', () => {
+      let movePieceResult = game.movePiece('R1', [1, 5]);
+      expect(movePieceResult).toEqual('InvalidMovement');
+    });
 
-    turn = game.getCurrentTurn();
-
-    expect(turn.getColor()).toEqual('white');
-    expect(turn.getTurnNumber()).toEqual(2);
-  });
-
-  it('knows that we cannot move a red piece horizontally', () => {
-    let movePieceResult = game.movePiece('R1', [1, 5]);
-    expect(movePieceResult).toEqual('InvalidMovement');
-  });
-
-  it ('can get the available moves for an initial corner piece', () => {
-    let response = game.getAvailableMovesForPiece('R1');
-    expect(response.type).toEqual('Success');
-    expect(response.data?.length).toEqual(1);
-    expect(response.data?.[0].getTo()).toEqual([1,4])
+    it('knows that we cannot move a piece vertically', () => {
+      let movePieceResult = game.movePiece('R1', [0, 4]);
+      expect(movePieceResult).toEqual('InvalidMovement');
+    });
   })
 
-  it ('can get the available moves for an initial middle piece', () => {
-    let response = game.getAvailableMovesForPiece('R4');
-    let moves = response.data;
+  describe('moves', () => {
+    it ('knows an initial front corner piece has one move', () => {
+      let response = game.getAvailableMovesForPiece('R1');
+      expect(response.type).toEqual('Success');
+      expect(response.data?.length).toEqual(1);
+      expect(response.data?.[0].getTo()).toEqual([1,4])
+    })
 
-    expect(response.type).toEqual('Success');
-    expect(moves?.length).toEqual(2);
-    expect(moves?.[0].getTo()).toEqual([1,4]);
-    expect(moves?.[1].getTo()).toEqual([3,4]);
+    it ('knows an initial front middle piece has two moves', () => {
+      let response = game.getAvailableMovesForPiece('R4');
+      let moves = response.data;
+  
+      expect(response.type).toEqual('Success');
+      expect(moves?.length).toEqual(2);
+      expect(moves?.[0].getTo()).toEqual([1,4]);
+      expect(moves?.[1].getTo()).toEqual([3,4]);
+    });
+
+    it ('knows that we cant move a piece on top of another piece', () => {
+      let response = game.getAvailableMovesForPiece('W7');
+      let moves = response.data;
+  
+      expect(response.type).toEqual('Success');
+      expect(moves?.length).toEqual(0);
+    });
+  
+    it('knows that we cant move a piece off the grid', () => {
+      let response = game.getAvailableMovesForPiece('R12');
+      let moves = response.data;
+  
+      expect(response.type).toEqual('Success');
+      expect(moves?.length).toEqual(0);
+  
+      response = game.getAvailableMovesForPiece('R1');
+      moves = response.data;
+  
+      expect(response.type).toEqual('Success');
+      expect(moves?.length).toEqual(1);
+    });
   })
 
-  it('knows that we cant move a piece off the grid', () => {
-    
-  });
+  
 
-  it('knows that we cannot move a piece horizontal or vertically', () => {
+  
 
-  });
+  
 
-  it ('knows that we cant move a piece on top of another piece', () => {
-
-  })
+  
 
   it ('knows that white pieces move downward and cannot move upward', () => {
 

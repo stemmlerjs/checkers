@@ -1,7 +1,7 @@
 import { Board } from "../board/Board";
 import { Piece, Position } from "../pieces/Piece";
 
-type Directionality = 'Upwards' | 'Downwards' | 'Sideways' | 'Stationary';
+type Directionality = 'Upwards' | 'Downwards' | 'Sideways' | 'Stationary' | 'Vertically';
 type CanMovePieceResult = 'InvalidDirectionality' | 'PositionOutOfBounds' | 'PositionObstrucuted'
 
 /**
@@ -26,6 +26,10 @@ export class MoveService {
       return 'Sideways'
     }
 
+    if (startX === targetX && startY !== targetY) {
+      return 'Vertically'
+    }
+
     if (startY > targetY) {
       return 'Upwards'
     }
@@ -43,6 +47,8 @@ export class MoveService {
     if (directionality === 'Stationary') return false;
     
     if (directionality === 'Sideways') return false;
+
+    if (directionality === 'Vertically') return false;
 
     if (piece.getPieceType() === 'king') return true;
 
