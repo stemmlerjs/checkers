@@ -1,3 +1,4 @@
+
 import { makeAutoObservable } from "mobx";
 import { Result } from "../../../shared/logic/Result";
 import { Square } from "../square/Square";

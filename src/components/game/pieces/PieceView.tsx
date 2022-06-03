@@ -20,6 +20,9 @@ export const PieceView = ({ piece, onPieceDragged }: PieceViewProps ) => {
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
     }),
+    // TODO: Change this based on if it's the current color's turn - write a component test
+    // for this.
+    canDrag: () => true
   }));
 
   useEffect(() => {
