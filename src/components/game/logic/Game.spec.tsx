@@ -3,7 +3,6 @@ import { EventObserver } from "../../../shared/infra/observer/EventObserver";
 import { Board } from "../board/Board";
 import { Pieces } from "../pieces/Pieces";
 import { Game } from "./Game";
-import { PieceMovedEvent } from "./GameEvents";
 import { Turn } from "./Turn";
 
 describe('initial game behavior', () => {
@@ -105,6 +104,11 @@ describe('initial game behavior', () => {
       expect(response.type).toEqual('Success');
       expect(moves?.length).toEqual(1);
     });
+
+    it ('can only move one space ahead', () => {
+      let moveResult = game.movePiece('R10', [4, 3]);
+      expect(moveResult).toEqual('InvalidMovement');
+    })
   })
 });
 

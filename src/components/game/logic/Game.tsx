@@ -1,3 +1,4 @@
+
 import { Result } from "../../../shared/logic/Result";
 import { Board } from "../board/Board";
 import { Piece, Position } from "../pieces/Piece";
@@ -72,7 +73,7 @@ export class Game {
 
         moves.push(new Move(piece.getPosition(), diagonal));
 
-      })
+      });
     
     return { type: 'Success', data: moves }
   }
@@ -105,7 +106,7 @@ export class Game {
     // If they're NOT jumping a piece, continue ahead with the standard move.
     
     // // Determine if movement is valid
-    const canMove = this.moveService.canMovePiece(board, piece, targetPosition);
+    const canMove = this.moveService.canMovePiece(this, piece, targetPosition);
 
     if (!canMove) {
       return 'InvalidMovement';
@@ -137,7 +138,7 @@ export class Game {
     this.lastDraggedPiece = piece;
   }
 
-  handlePieceDragged (e: PieceDraggedEvent) {
+  public handlePieceDragged (e: PieceDraggedEvent) {
     let result = this.getAvailableMovesForPiece(e.piece);
 
     if (result.type !== 'Success') {
@@ -151,7 +152,7 @@ export class Game {
     this.board.setDroppableSquares(positions);
   }
 
-  handlePieceDropped(e: PieceDroppedEvent) {
+  public handlePieceDropped(e: PieceDroppedEvent) {
     let piece = this.lastDraggedPiece as Piece;
 
     this.movePiece(piece.getId(),e.square.getPosition())
