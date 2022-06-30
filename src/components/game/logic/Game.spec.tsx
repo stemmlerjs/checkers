@@ -3,6 +3,7 @@ import { EventObserver } from "../../../shared/infra/observer/EventObserver";
 import { Board } from "../board/Board";
 import { Pieces } from "../pieces/Pieces";
 import { Game } from "./Game";
+import { Movement } from "./GameCommands";
 import { PieceMovedEvent } from "./GameEvents";
 import { Turn } from "./Turn";
 
@@ -132,7 +133,15 @@ describe('starting a game from previous events', () => {
       new PieceMovedEvent('R10', [7, 4])
     ]);
 
+    let game = gameResult.getValue();
+    let r1Moves = game.getAvailableMovesForPiece('R1').data as Movement[];
+    let r1TargetPosition = r1Moves[0].getTo();
+
     expect (gameResult.isSuccess).toBeTruthy();
+    expect (game.getCurrentTurn().getColor()).toEqual('white');
+    expect (r1Moves.length).toEqual(1);
+    expect (r1TargetPosition).toEqual([2, 3]);
+    
   });
 
   it('fails to start the game from this state if events are invalid or illegal', () => {

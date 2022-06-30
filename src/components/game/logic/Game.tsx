@@ -161,7 +161,7 @@ export class Game {
     this.board.clearDroppableSquares();
   }
 
-  public applyEvent (event: GameEvent) {
+  private applyEvent (event: GameEvent) {
     switch (event.name) {
       case 'PieceMoved':
         let e = (event as PieceMovedEvent);
@@ -177,7 +177,8 @@ export class Game {
     for (let event of events) {
       let eventResult = game.applyEvent(event);
 
-      // TODO: Convert event result to either type
+      // TODO: Convert event result to either type for future event 
+      // application - let's generalize this
       if (eventResult !== 'Success') {
         return Result.fail<Game>(`Can't apply event ${event.name}`);
       }
