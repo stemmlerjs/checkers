@@ -3,7 +3,7 @@ import { Result } from "../../../shared/logic/Result";
 import { Board } from "../board/Board";
 import { Piece, Position } from "../pieces/Piece";
 import { Move, Movement } from "./GameCommands";
-import { PieceDraggedEvent, PieceDroppedEvent } from "./GameEvents";
+import { GameEvent, PieceDraggedEvent, PieceDroppedEvent, PieceMovedEvent } from "./GameEvents";
 import { MoveService } from "./MoveService";
 import { Turn } from "./Turn";
 
@@ -159,5 +159,30 @@ export class Game {
 
     this.setLastDraggedPiece(undefined);
     this.board.clearDroppableSquares();
+  }
+
+  public applyEvent (event: GameEvent) {
+    switch (event.name) {
+      case 'PieceMoved':
+        let e = (event as PieceMovedEvent);
+        return this.movePiece(e.pieceId, e.position);
+      default:
+        throw new Error("Event not found")
+    }
+  }
+
+  public static createFromEvents (board: Board, events: GameEvent[]): Result<Game> {
+    let game = new Game(board);
+
+    for (let event of events) {
+      let eventResult = game.applyEvent(event);
+
+      // TODO: Convert event result to either type
+      if (eventResult !== 'Success') {
+        return Result.fail<Game>(`Can't apply event ${event.name}`);
+      }
+    }
+
+    return Result.ok<Game>(game);
   }
 }

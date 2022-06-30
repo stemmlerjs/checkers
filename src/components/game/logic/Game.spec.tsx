@@ -3,6 +3,7 @@ import { EventObserver } from "../../../shared/infra/observer/EventObserver";
 import { Board } from "../board/Board";
 import { Pieces } from "../pieces/Pieces";
 import { Game } from "./Game";
+import { PieceMovedEvent } from "./GameEvents";
 import { Turn } from "./Turn";
 
 describe('initial game behavior', () => {
@@ -112,7 +113,7 @@ describe('initial game behavior', () => {
   })
 });
 
-describe('starting a game from events', () => {
+describe('starting a game from previous events', () => {
   let game: Game;
   let pieces: Pieces;
   let turn: Turn;
@@ -125,19 +126,23 @@ describe('starting a game from events', () => {
   });
 
   it('replays the events and starts the game from that state', () => {
-    // game = new Game(board, [
-    //   new PieceMovedEvent('R1', []),
-    //   new PieceMovedEvent(),
-    //   new PieceMovedEvent('')
-    // ])
+    let gameResult = Game.createFromEvents(board, [
+      new PieceMovedEvent('R1', [1, 4]),
+      new PieceMovedEvent('W3', [0, 3]),
+      new PieceMovedEvent('R10', [7, 4])
+    ]);
+
+    expect (gameResult.isSuccess).toBeTruthy();
   });
 
   it('fails to start the game from this state if events are invalid or illegal', () => {
-    // game = new Game(board, [
-    //   new PieceMovedEvent('R1', []),
-    //   new PieceMovedEvent(),
-    //   new PieceMovedEvent('')
-    // ])
+    let gameResult = Game.createFromEvents(board, [
+      new PieceMovedEvent('R1', [1, 2]),
+      new PieceMovedEvent('R1', [1, 2]),
+      new PieceMovedEvent('R1', [1, 2])
+    ]);
+
+    expect (gameResult.isSuccess).toBeFalsy();
   });
 })
 
